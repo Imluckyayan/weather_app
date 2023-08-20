@@ -24,8 +24,12 @@ class HourlyForecastItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(timeinterval,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            Icon(icon, size: 30),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Icon(
+              icon,
+              size: 30,
+            ),
             Text(temperature)
           ],
         ),
