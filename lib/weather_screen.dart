@@ -17,9 +17,9 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Future<Map<String, dynamic>> getCurrentWeather() async {
     try {
-      String cityName = 'London';
+      String cityName = 'Delhi';
       final res = await http.get(Uri.parse(
-          'http://api.openweathermap.org/data/2.5/forecast?q=$cityName,uk&APPID=$openWeatherAPIKey'));
+          'http://api.openweathermap.org/data/2.5/forecast?q=$cityName,india&APPID=$openWeatherAPIKey'));
       final forecastData = jsonDecode(res.body);
       if (forecastData['cod'] != '200') {
         throw 'An unexpected error occurred';
@@ -63,7 +63,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           }
 
           final forecastData = snapshot.data!;
-          double currentTemp = forecastData['list'][0]['main']['temp'];
+          double currentTemp = forecastData['list'][0]['main']['temp']-273.15;
           String currentWeather = forecastData['list'][0]['weather'][0]['main'];
           num currentHumidity = forecastData['list'][0]['main']['humidity'];
           num currentPressure = forecastData['list'][0]['main']['pressure'];
@@ -90,7 +90,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '$currentTemp K',
+                              '${currentTemp.toStringAsFixed(1)}°C',
                               style: const TextStyle(
                                   fontSize: 32, fontWeight: FontWeight.bold),
                             ),
@@ -124,10 +124,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   height: 120,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 40,
+                    itemCount: 39,
                     itemBuilder: (context, index) {
                       final time = DateTime.parse(forecastData['list'][index+1]['dt_txt']);
-                      final weather =
+                      final weather = 
                           forecastData['list'][index+1]['weather'][0]['main'];
                       return HourlyForecastItem(
                         timeinterval: DateFormat.j().format(time),
@@ -135,8 +135,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 weather == 'Rain' && weather != 'Clear'
                             ? Icons.cloud
                             : Icons.sunny,
-                        temperature: (forecastData['list'][index+1]['main']['temp'])
-                            .toString(),
+                        temperature: forecastData['list'][index+1]['main']['temp'],
                       );
                     },
                   ),
