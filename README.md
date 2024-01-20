@@ -3,7 +3,7 @@
 This is a weather application built with Flutter. It fetches data from the OpenWeatherMap API and displays the current weather information and hourly forecast.
 
 ## Screenshots
-![App Screenshot](flutter_1.png)
+<img src="./assets/app_screenshot.png" width=300>
 
 
 ## Components
